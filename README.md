@@ -1,34 +1,5 @@
-# vue-cli3-proj
+# vue-cli3项目搭建配置
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Run your unit tests
-```
-yarn run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* 自动注册全局组件
+* 自动注册路由
+* 生成组件/全局组件脚本脚本 npm run new:comp
