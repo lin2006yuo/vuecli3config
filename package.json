@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "new:comp": "node ./scripts/generateComponent"
+    "new:comp": "node ./scripts/generateComponent",
+    "new:view": "node ./scripts/generateView"
   },
   "dependencies": {
     "core-js": "^2.6.5",

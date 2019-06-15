@@ -1,7 +1,7 @@
 const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs')
-const resolve = (...file) => path.resolve(__filename, ...file)
+const resolve = (...file) => path.resolve(__dirname, ...file)
 const log = message => console.log(chalk.green(`${message}`))
 const successLog = message => console.log(chalk.blue(`${message}`))
 const errorLog = message => console.log(chalk.red(`${message}`))
@@ -25,10 +25,12 @@ const generateFile = (path, data) => {
 }
 
 log('请输入要生成的组件名称， 如需生成全局组件，请加 global/ 前缀')
+
 let componentName = ''
+
 process.stdin.on('data', async chunk => {
   const inputName = String(chunk).trim().toString()
-  const componentDirPath = resolve('../../src/components', inputName)
+  const componentDirPath = resolve('../src/components', inputName)
   const componentPath = resolve(componentDirPath, 'main.vue')
   const componentEntryPath = resolve(componentDirPath, 'index.js')
 
@@ -38,6 +40,7 @@ process.stdin.on('data', async chunk => {
     return
   } else {
     log(`正在生成component 目录 ${componentDirPath}`)
+    console.log('dirPath:', componentDirPath)
     await doExistDirectoryCreate(componentDirPath)
 
     try {
