@@ -1,8 +1,53 @@
-// module.exports = {
-//   chainWWebpack: config => {
-//     config.plugin('define').tap(args => {
-//       args[0]['process.env'].BASE_URL = JSON.stringify(process.env.BASE_URL)
-//       return args
-//     })
-//   }
-// }
+const CompressionPlugin = require('compression-webpack-plugin')
+
+module.exports = {
+  chainWebpack: config => {
+    config.externals({
+      vue: 'Vue',
+      axios: 'axios',
+      'element-ui': 'ELEMENT',
+      'vue-router': 'VueRouter',
+      vuex: 'Vuex'
+    })
+    config.plugin('define').tap(args => {
+      args[0]['process.env'].BASE_URL = JSON.stringify(process.env.BASE_URL)
+      return args
+    })
+    if(process.env.NODE_ENV === 'production') {
+      config
+        .plugin('compression')
+        .use(CompressionPlugin, {
+          asset: '[path].gz[query]',
+          algorithm: 'gzip',
+          test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
+          threshold: 10240,
+          minRatio: 0.8,
+          cache: true
+        })
+        .tap(arg => {})
+    }
+    config.plugin('html')
+      .tap(args => {
+        args[0].cdn = {
+          css: [
+            // element-ui css
+            '//unpkg.com/element-ui/lib/theme-chalk/index.css'
+          ],
+          js: [
+            // vue
+            '//cdn.staticfile.org/vue/2.5.22/vue.min.js',
+            // vue-router
+            '//cdn.staticfile.org/vue-router/3.0.2/vue-router.min.js',
+            // vuex
+            '//cdn.staticfile.org/vuex/3.1.0/vuex.min.js',
+            // axios
+            '//cdn.staticfile.org/axios/0.19.0-beta.1/axios.min.js',
+            // element-ui js
+            '//unpkg.com/element-ui/lib/index.js'
+          ]
+        }
+
+        return args
+      })
+  }
+}
